@@ -1,8 +1,8 @@
 from rest_framework import viewsets, response, status, exceptions
 from rest_framework.decorators import api_view
-from .serializers import OrderSerializer, ProductSerializer
-from .models import Order, Product
-from . import services
+from ..serializers.serializers import OrderSerializer, ProductSerializer
+from ..models.models import Order, Product
+from api.services import services
 
 # Create your views here.
 #ORDERS
@@ -30,8 +30,11 @@ class OrderViewSet(viewsets.ViewSet):
         return response.Response(serializer.data)
     
     def destroy(self, request, pk=None):
-        services.delete_order_service(pk)
-        return response.Response(status=status.HTTP_204_NO_CONTENT)
+            try:
+                services.delete_order_service(pk)
+                return response.Response(status=status.HTTP_204_NO_CONTENT)
+            except exceptions.NotFound:
+                return response.Response({'error': 'Orden no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['DELETE'])
 def delete_all_orders(request):

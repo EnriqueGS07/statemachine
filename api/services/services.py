@@ -1,5 +1,5 @@
-from . import repositories
-from .models import Order, Product
+from ..repositories import repositories
+from ..models.models import Order, Product
 from rest_framework.exceptions import NotFound
 
 #ORDERS

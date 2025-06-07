@@ -1,4 +1,4 @@
-from .models import Order, Product
+from ..models.models import Order, Product
 
 #ORDERS
 def get_all_orders():
