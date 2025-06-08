@@ -4,7 +4,6 @@ ENV/
 .VENV/
 
 __pycache__/
-__init__.py
 *.py[cod]
 *$py.class
 

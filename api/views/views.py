@@ -1,5 +1,5 @@
 from rest_framework import viewsets, response, status, exceptions
-from rest_framework.decorators import api_view
+from rest_framework.decorators import action
 from ..serializers.serializers import OrderSerializer, ProductSerializer
 from ..models.models import Order, Product
 from api.services import services
@@ -36,10 +36,10 @@ class OrderViewSet(viewsets.ViewSet):
             except exceptions.NotFound:
                 return response.Response({'error': 'Orden no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['DELETE'])
-def delete_all_orders(request):
-    Order.objects.all().delete()
-    return response.Response({'message': 'All orders deleted.'})
+    @action(detail=False, methods=['delete'], url_path='delete-all')
+    def delete_all_orders(self, request):
+        Order.objects.all().delete()
+        return response.Response({'message': 'All orders deleted.'})
 
 #PRODUCTS
 class ProductViewSet(viewsets.ViewSet):
@@ -72,7 +72,7 @@ class ProductViewSet(viewsets.ViewSet):
         except exceptions.NotFound:
             return response.Response({'error': 'Producto no encontrado'}, status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['DELETE'])
-def delete_all_products(request):
-    Product.objects.all().delete()
-    return response.Response({'message': 'All Products deleted.'})
+    @action(detail=False, methods=['delete'], url_path='delete-all')
+    def delete_all_products(self, request):
+        Product.objects.all().delete()
+        return response.Response({'message': 'All Products deleted.'})
