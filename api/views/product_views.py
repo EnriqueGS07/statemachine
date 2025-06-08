@@ -25,7 +25,7 @@ class ProductViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         product = product_services.get_product_by_id(pk)
         if product is None:
-            raise exceptions.NotFound("No se encontro la Orden")
+            raise exceptions.NotFound("No se encontro la el producto")
         serializer = self.serializer_class(product)
         return response.Response(serializer.data)
 
@@ -40,4 +40,4 @@ class ProductViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['delete'], url_path='delete-all')
     def delete_all_products(self, request):
         Product.objects.all().delete()
-        return response.Response({'message': 'All Products deleted.'})
+        return response.Response({'message': 'Productos borrados.'})

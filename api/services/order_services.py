@@ -2,6 +2,20 @@ from ..repositories import order_repository
 from ..models.order_model import Order
 from rest_framework.exceptions import NotFound
 
+POSIBLE_TRANSITIONS = {
+"Pending": {"pendingBiometricalVerification":"OnHold","noVerificationNeeded":"PendingPayment","orderCancelled":"Cancelled","paymentFailed":"Cancelled","orderCancelledByUser":"Cancelled"},
+"OnHold":{"biometricalVerificationSuccessful":"PendingPayment","orderCancelledByUser":"Cancelled","verificationFailed":"Cancelled" },
+"PendingPayment":{"paymentSuccessful":"Confirmed","Cancelled":"orderCancelledByUser"},
+"Confirmed":{"preparingShipment":"Processing","Cancelled":"orderCancelledByUser" },
+"Processing":{"itemDispatched":"Shipped","Cancelled":"orderCancelledByUser" },
+"Shipped":{"itemReceivedByCustomer":"Delivered","deliveryIssue":"OnHold","Cancelled":"orderCancelledByUser"},
+"Delivered":{"Returning":"returnInitiatedByCustomer"},
+"Returning":{"returnInitiatedByCustomer":"Returned","Cancelled": "orderCancelledByUser"},
+"Returned":{"refundProcessed":"Refunded"},
+"Refunded":{},
+"Cancelled":{}
+}
+
 #ORDERS
 def list_orders():
     return order_repository.get_all_orders()
@@ -26,4 +40,13 @@ def delete_order_service(pk):
 
 def delete_all_orders_service():
     return order_repository.delete_all_orders()
+
+def get_new_state(current_state, trigger):
+    posible_actions = POSIBLE_TRANSITIONS[current_state]
+    print(current_state, trigger)
+    print(posible_actions.keys())
+    if trigger not in posible_actions.keys():
+        return None 
+    else:
+        return posible_actions[trigger]
 

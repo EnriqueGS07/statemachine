@@ -39,5 +39,19 @@ class OrderViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['delete'], url_path='delete-all')
     def delete_all_orders(self, request):
         Order.objects.all().delete()
-        return response.Response({'message': 'All orders deleted.'})
-
+        return response.Response({'message': 'Ordenes Borradas'})
+    
+    @action (detail=True, methods=['put'], url_path='update-state')
+    def update_state(self, request, pk=None):
+        order = Order.objects.filter(id=pk).first()
+        if not order:
+            return response.Response({'error': 'Orden no encontrada'}, status=status.status.HTTP_404_NOT_FOUND)
+        trigger = request.data.get('trigger')
+        if not trigger:
+            return response.Response({'error': 'Seleccione un Trigger'}, status=status.HTTP_400_BAD_REQUEST)
+        new_state = order_services.get_new_state(order.current_state, trigger)
+        if not new_state:
+            return response.Response({'error': "Transicion no valida"}, status=status.HTTP_400_BAD_REQUEST)
+        order.current_state = new_state
+        order.save()
+        return response.Response({'message':f"Orden '{order.id}' actualizada a '{order.current_state}'"})

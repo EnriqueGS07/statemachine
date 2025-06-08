@@ -7,7 +7,7 @@ class Order(models.Model):
     user = models.CharField(max_length=250, default="Unkown")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='orders', default=1)
     amount = models.IntegerField(default=1)
-    current_event  = models.CharField(max_length=100, default="Pending")
+    current_state  = models.CharField(max_length=100, default="Pending")
     
 
     
