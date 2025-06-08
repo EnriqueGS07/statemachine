@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views.views import OrderViewSet, ProductViewSet
+from .views.order_views import OrderViewSet
+from .views.product_views import ProductViewSet
 
 router = routers.DefaultRouter()
 router.register(r'orders', OrderViewSet, basename="order")
