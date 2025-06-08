@@ -1,6 +1,7 @@
 from ..repositories import order_repository
 from ..models.order_model import Order
 from rest_framework.exceptions import NotFound
+from django.utils import timezone
 
 POSIBLE_TRANSITIONS = {
 "Pending": {"pendingBiometricalVerification":"OnHold","noVerificationNeeded":"PendingPayment","orderCancelled":"Cancelled","paymentFailed":"Cancelled","orderCancelledByUser":"Cancelled"},
@@ -43,10 +44,20 @@ def delete_all_orders_service():
 
 def get_new_state(current_state, trigger):
     posible_actions = POSIBLE_TRANSITIONS[current_state]
-    print(current_state, trigger)
-    print(posible_actions.keys())
     if trigger not in posible_actions.keys():
         return None 
     else:
         return posible_actions[trigger]
+
+def update_log(pk, trigger):
+    order = Order.objects.filter(id=pk).first()
+    if not order:
+        raise ValueError("Orden no encontrada")
+    
+    new_state = get_new_state(order.current_state, trigger)
+    if not new_state:
+        raise ValueError("No se pudo actualizar el log de estados")
+    
+    time = timezone.now().isoformat()
+    order.state_log[new_state] = {"Evento": trigger, "Hora del cambio": timezone}
 

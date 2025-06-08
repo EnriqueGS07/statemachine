@@ -8,6 +8,9 @@ class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='orders', default=1)
     amount = models.IntegerField(default=1)
     current_state  = models.CharField(max_length=100, default="Pending")
+    state_log = models.JSONField(default=dict)
+    
+    
     
 
     
