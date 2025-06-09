@@ -52,6 +52,8 @@ class OrderViewSet(viewsets.ViewSet):
         new_state = order_services.get_new_state(order.current_state, trigger)
         if not new_state:
             return response.Response({'error': "Transicion no valida"}, status=status.HTTP_400_BAD_REQUEST)
-        order.current_state = new_state
-        order.save()
+        
+        order = order_services.update_log(pk, trigger)
         return response.Response({'message':f"Orden '{order.id}' actualizada a '{order.current_state}'"})
+    
+    

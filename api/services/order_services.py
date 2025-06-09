@@ -59,5 +59,8 @@ def update_log(pk, trigger):
         raise ValueError("No se pudo actualizar el log de estados")
     
     time = timezone.now().isoformat()
-    order.state_log[new_state] = {"Evento": trigger, "Hora del cambio": timezone}
+    order.state_log[new_state] = {"Evento": trigger, "Hora del cambio": time}
+    order.current_state = new_state
+    order.save()
+    return order
 
