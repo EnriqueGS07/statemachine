@@ -11,6 +11,7 @@ def create_order(data):
             data["product"] = Product.objects.get(pk=data["product"])
         except Order.DoesNotExist:
             raise ValueError(f"Producto con id {data['product']} no existe.")
+        
     return Order.objects.create(**data)
 
 def get_order_by_id(order_id):
