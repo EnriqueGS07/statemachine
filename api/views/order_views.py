@@ -54,6 +54,7 @@ class OrderViewSet(viewsets.ViewSet):
             return response.Response({'error': "Transicion no valida"}, status=status.HTTP_400_BAD_REQUEST)
         
         order = order_services.update_log(pk, trigger)
-        return response.Response({'message':f"Orden '{order.id}' actualizada a '{order.current_state}'"})
+        serializer = self.serializer_class(order)
+        return response.Response(serializer.data)
     
     

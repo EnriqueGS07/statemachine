@@ -6,12 +6,12 @@ from django.utils import timezone
 POSIBLE_TRANSITIONS = {
 "Pending": {"pendingBiometricalVerification":"OnHold","noVerificationNeeded":"PendingPayment","orderCancelled":"Cancelled","paymentFailed":"Cancelled","orderCancelledByUser":"Cancelled"},
 "OnHold":{"biometricalVerificationSuccessful":"PendingPayment","orderCancelledByUser":"Cancelled","verificationFailed":"Cancelled" },
-"PendingPayment":{"paymentSuccessful":"Confirmed","Cancelled":"orderCancelledByUser"},
-"Confirmed":{"preparingShipment":"Processing","Cancelled":"orderCancelledByUser" },
-"Processing":{"itemDispatched":"Shipped","Cancelled":"orderCancelledByUser" },
-"Shipped":{"itemReceivedByCustomer":"Delivered","deliveryIssue":"OnHold","Cancelled":"orderCancelledByUser"},
+"PendingPayment":{"paymentSuccessful":"Confirmed","orderCancelledByUser":"Cancelled"},
+"Confirmed":{"preparingShipment":"Processing","orderCancelledByUser":"Cancelled" },
+"Processing":{"itemDispatched":"Shipped","orderCancelledByUser":"Cancelled" },
+"Shipped":{"itemReceivedByCustomer":"Delivered","deliveryIssue":"OnHold","orderCancelledByUser":"Cancelled"},
 "Delivered":{"Returning":"returnInitiatedByCustomer"},
-"Returning":{"returnInitiatedByCustomer":"Returned","Cancelled": "orderCancelledByUser"},
+"Returning":{"returnInitiatedByCustomer":"Returned","orderCancelledByUser": "Cancelled"},
 "Returned":{"refundProcessed":"Refunded"},
 "Refunded":{},
 "Cancelled":{}
