@@ -20,7 +20,7 @@ POSIBLE_TRANSITIONS = {
 
 def generate_unique_ticket():
     while True:
-        ticket = random.randint(10000, 99999)  # Puedes ajustar el rango si necesitas más combinaciones
+        ticket = random.randint(10000, 99999)  
         if not Order.objects.filter(active_ticket=ticket).exists():
             return ticket
 
