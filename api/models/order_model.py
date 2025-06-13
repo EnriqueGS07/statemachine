@@ -5,7 +5,7 @@ from django.utils import timezone
 TIME = timezone.now().isoformat()
 
 def initial_state():
-    return [{"Pending":{"Evento": "CreatedOrder", "Hora del cambio": TIME}}]
+    return [{"Pending":{"evento": "CreatedOrder", "hora": TIME}}]
 
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
