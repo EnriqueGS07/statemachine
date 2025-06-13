@@ -17,7 +17,7 @@ Para esta prueba se construyo una maquina de estados con back y front para gesti
 ## 🚀 Demo
 
 http://zappa-front.s3-website-us-east-1.amazonaws.com
-
+⚠️ *Este proyecto está desplegado en un bucket S3 configurado como sitio web estático. Debido a las limitaciones de este tipo de despliegue, no se admite conexión HTTPS directamente desde el bucket.*
 ## 📦 Tecnologías
 
 - Frontend: React + TypeScript
