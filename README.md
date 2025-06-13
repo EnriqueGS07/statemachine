@@ -70,7 +70,7 @@ despues de ejecutar este comando saldrán preguntas de configuración de zappa c
 ```
 zappa deploy dev
 ```
-con este comando zappa crea configura y despliega en AWS Lambda la API y esta lista para probar desplegada
+con este comando zappa crea configura y despliega en AWS Lambda la API y esta lista para probar desplegada.
 
 
 
