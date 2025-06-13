@@ -1,4 +1,4 @@
-# Maquina de estados: Prueba tecnca Sainapsis
+# Maquina de estados: Prueba técnica Sainapsis
 ### By: Enrique González Suárez
 
 ![Python](https://img.shields.io/badge/python-3.11-blue)
