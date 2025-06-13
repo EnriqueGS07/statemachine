@@ -2,6 +2,7 @@ from ..repositories import order_repository
 from ..models.order_model import Order
 from rest_framework.exceptions import NotFound
 from django.utils import timezone
+import random
 
 POSIBLE_TRANSITIONS = {
 "Pending": {"pendingBiometricalVerification":"OnHold","noVerificationNeeded":"PendingPayment","orderCancelled":"Cancelled","paymentFailed":"Cancelled","orderCancelledByUser":"Cancelled"},
@@ -17,6 +18,12 @@ POSIBLE_TRANSITIONS = {
 "Cancelled":{}
 }
 
+def generate_unique_ticket():
+    while True:
+        ticket = random.randint(10000, 99999)  # Puedes ajustar el rango si necesitas más combinaciones
+        if not Order.objects.filter(active_ticket=ticket).exists():
+            return ticket
+
 #ORDERS
 def list_orders():
     return order_repository.get_all_orders()
@@ -24,6 +31,9 @@ def list_orders():
 def create_order_service(data):
     if "user" not in data :
         raise ValueError("La orden debe tener un usuario")
+    if data["amount"] > 1000:
+        print("Se genero ticket")
+        data["active_ticket"] = generate_unique_ticket()
     return order_repository.create_order(data)
 
 def get_order_by_id(order_id):
@@ -59,7 +69,7 @@ def update_log(pk, trigger):
         raise ValueError("No se pudo actualizar el log de estados")
     
     time = timezone.now().isoformat()
-    order.state_log[new_state] = {"Evento": trigger, "Hora del cambio": time}
+    order.state_log.append({new_state:{"Evento": trigger, "Hora del cambio": time}})
     order.current_state = new_state
     order.save()
     return order

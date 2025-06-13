@@ -5,7 +5,7 @@ from django.utils import timezone
 TIME = timezone.now().isoformat()
 
 def initial_state():
-    return {"Pending":{"Evento": "CreatedOrder", "Hora del cambio": TIME}}
+    return [{"Pending":{"Evento": "CreatedOrder", "Hora del cambio": TIME}}]
 
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
@@ -14,6 +14,7 @@ class Order(models.Model):
     amount = models.IntegerField(default=1)
     current_state  = models.CharField(max_length=100, default="Pending")
     state_log = models.JSONField(default=initial_state)
+    active_ticket = models.IntegerField(default=-1)
     
     
     
