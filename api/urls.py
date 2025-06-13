@@ -11,5 +11,6 @@ router.register(r'products', ProductViewSet, basename='product')
 urlpatterns=[
     #path('orders/delete_all/', delete_all_orders, name='delete-all-orders'),
     #path('products/delete_all/', delete_all_products, name='delete-all-orders'),
+    
     path('', include(router.urls)),
 ]
