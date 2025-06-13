@@ -27,8 +27,8 @@ http://zappa-front.s3-website-us-east-1.amazonaws.com
 ## 🛠️ Instalación y ejecución local
 1. Clona el repositorio
 ```
-git clone https://github.com/tuusuario/tu-repo.git
-cd tu-repo
+git clone https://github.com/EnriqueGS07/statemachine.git
+cd statemachine
 ```
 2. Configura el ambiente del back
 ```
